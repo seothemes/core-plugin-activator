@@ -16,8 +16,8 @@ For example:
 use SEOThemes\Core\PluginActivator;
 
 $plugins = [
-	PluginActivator::REGISTER => [
-		'Genesis eNews Extended',
+    PluginActivator::REGISTER => [
+        'Genesis eNews Extended',
         'Genesis Simple FAQ',
         'Genesis Testimonial Slider',
         'Genesis Widget Column Classes',
@@ -26,7 +26,7 @@ $plugins = [
         'One Click Demo Import',
         'Simple Social Icons',
         'WP Featherlight',
-	],
+    ],
 ];
 
 return [
