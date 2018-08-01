@@ -1,0 +1,21 @@
+{
+  "name": "seothemes/core-required-plugins",
+  "description": "Dynamically defines constants for use throughout child themes",
+  "type": "library",
+  "license": "gpl-2.0-or-later",
+  "authors": [
+    {
+      "name": "seothemes",
+      "email": "seothemeswp@gmail.com"
+    }
+  ],
+  "require": {
+    "d2/core": "^0.1.0",
+    "tgmpa/tgm-plugin-activation": "dev-develop"
+  },
+  "autoload": {
+    "psr-4": {
+      "SEOThemes\\Core\\": "src/"
+    }
+  }
+}
