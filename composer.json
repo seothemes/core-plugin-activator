@@ -1,6 +1,6 @@
 {
-  "name": "seothemes/core-required-plugins",
-  "description": "Dynamically defines constants for use throughout child themes",
+  "name": "seothemes/core-plugin-activator",
+  "description": "Add recommended plugins to TGM Plugin Activation through configuration",
   "type": "library",
   "license": "gpl-2.0-or-later",
   "authors": [
