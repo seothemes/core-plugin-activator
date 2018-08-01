@@ -45,6 +45,8 @@ class PluginActivator extends Core {
 
 	const REGISTER = 'register';
 
+	public $plugins = [];
+
 	/**
 	 * Initialize class.
 	 *
@@ -58,9 +60,76 @@ class PluginActivator extends Core {
 
 			new \TGM_Plugin_Activation();
 
-			$this->register_plugins( $this->config[ self::REGISTER ] );
+			$this->register_plugins();
 
 		}
+
+	}
+
+	/**
+	 * Description of expected behavior.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $config
+	 *
+	 * @return void
+	 */
+	public function create_plugin_array() {
+
+		foreach ( $this->config[ self::REGISTER ] as $plugin ) {
+
+			$this->plugins[] = [
+				'name'     => $plugin,
+				'slug'     => strtolower( str_replace( ' ', '-', $plugin ) ),
+				'required' => false,
+			];
+
+		}
+
+	}
+
+	/**
+	 * Description of expected behavior.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function require_woocommerce_connect() {
+
+		if ( class_exists( 'WooCommerce' ) ) {
+
+			$this->plugins[] = [
+				'name'     => 'Genesis Connect WooCommerce',
+				'slug'     => 'genesis-connect-woocommerce',
+				'required' => true,
+			];
+
+		}
+
+	}
+
+
+	/**
+	 * Description of expected behavior.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+	public function tgmpa_settings() {
+
+		return [
+			'id'           => get_stylesheet(),
+			'default_path' => '',
+			'menu'         => 'tgmpa-install-plugins',
+			'has_notices'  => true,
+			'dismissable'  => true,
+			'dismiss_msg'  => '',
+			'is_automatic' => false,
+			'message'      => '',
+		];
 
 	}
 
@@ -81,34 +150,14 @@ class PluginActivator extends Core {
 	 *
 	 * @since  0.1.0
 	 *
-	 * @param  array $plugins List of plugins to register.
-	 *
 	 * @return void
 	 */
-	public function register_plugins( $plugins ) {
+	public function register_plugins() {
 
-		if ( class_exists( 'WooCommerce' ) ) {
+		$this->create_plugin_array();
+		$this->require_woocommerce_connect();
 
-			$plugins[] = array(
-				'name'     => 'Genesis Connect WooCommerce',
-				'slug'     => 'genesis-connect-woocommerce',
-				'required' => true,
-			);
-
-		}
-
-		$plugin_config = array(
-			'id'           => get_stylesheet(),
-			'default_path' => '',
-			'menu'         => 'tgmpa-install-plugins',
-			'has_notices'  => true,
-			'dismissable'  => true,
-			'dismiss_msg'  => '',
-			'is_automatic' => false,
-			'message'      => '',
-		);
-
-		\tgmpa( $plugins, $plugin_config );
+		\tgmpa( $this->plugins, $this->tgmpa_settings() );
 
 	}
 
